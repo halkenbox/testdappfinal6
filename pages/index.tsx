@@ -211,127 +211,147 @@ const Home: NextPage = () => {
   ]);
 
   return (
-    <><div className={styles.container} /><div className={styles.socialIcons}>
-      <div style={{ paddingRight: 10 }}>
-        <a href="https://opensea.io">
-          <Image
-            src={'/Opensea.png'}
-            width={48}
-            height={48}
-            alt='opensea' />
-        </a>
+    <div className={styles.container}>
+      <div className={styles.socialIcons}>
+        <div style={{ paddingRight: 10 }}>
+          <a href="">
+            <Image
+              src={'/Opensea.png'}
+              width={48}
+              height={48}
+              alt='https://opensea.io' />
+          </a>
+        </div>
+        <div style={{ paddingRight: 10 }}>
+          <a href="">
+            <Image
+              src={'/Twitter.png'}
+              width={48}
+              height={48}
+              alt='https://twitter.com' />
+          </a>
+        </div>
+        <div>
+          <a href="">
+            <Image
+              src={'/Website.png'}
+              width={48}
+              height={48}
+              alt='Website' />
+          </a>
+        </div>
       </div>
-      <div style={{ paddingRight: 10 }}>
-        <a href="https://twitter.com">
-          <Image
-            src={'/Twitter.png'}
-            width={48}
-            height={48}
-            alt='twitter' />
-        </a>
-      </div>
-      <div>
-        <a href="https://testmarch12.vercel.app">
-          <Image
-            src={'/Website.png'}
-            width={48}
-            height={48}
-            alt='Website' />
-        </a>
-      </div>
-    </div><div className={styles.mintInfoContainer}>
+      <div className={styles.mintInfoContainer}>
         {isLoading ? (
           <p>Loading...</p>
         ) : (
           <>
-            <MediaRenderer />
 
-            {/* Amount claimed so far */}
-            <div className={styles.mintCompletionArea}>
-              <div className={styles.mintAreaLeft}>
-                <p>Total Minted</p>
-              </div>
-              <div className={styles.mintAreaRight}>
-                {claimedSupply && unclaimedSupply ? (
-                  <p>
-                    <b>{numberClaimed}</b>
-                    {" / "}
-                    {numberTotal}
-                  </p>
-                ) : (
-                  <p>Loading...</p>
-                )}
-              </div>
-            </div>
+            <div className={styles.imageSide}>
+              {/* Image Preview of NFTs */}
+              <MediaRenderer
+                className={styles.image}
+                src="/preview.jpg"
+                alt={`<Boys> preview image`}
+              />
 
-            {claimConditions.data?.length === 0 ||
-              claimConditions.data?.every(
-                (cc) => cc.maxClaimableSupply === "0"
-              ) ? (
-              <div>
-                <h2>
-                  This drop is not ready to be minted yet. (No claim condition
-                  set)
-                </h2>
-              </div>
-            ) : !activeClaimCondition.data && claimConditions.data ? (
-              <div>
-                <h2>Drop starts in:</h2>
-                <Timer date={claimConditions.data[0].startTime} />
-              </div>
-            ) : (
-              <>
-                <p>Mint Item</p>
-                <div className={styles.quantityContainer}>
-                  <button
-                    className={`${styles.quantityControlButton}`}
-                    onClick={() => setQuantity(quantity - 1)}
-                    disabled={quantity <= 1}
-                  >
-                    -
-                  </button>
-
-                  <h4>{quantity}</h4>
-
-                  <button
-                    className={`${styles.quantityControlButton}`}
-                    onClick={() => setQuantity(quantity + 1)}
-                    disabled={quantity >= maxClaimable}
-                  >
-                    +
-                  </button>
+              {/* Amount claimed so far */}
+              <div className={styles.mintCompletionArea}>
+                <div className={styles.mintAreaLeft}>
+                  <p>Total Minted</p>
                 </div>
-
-                <div className={styles.mintContainer}>
-                  {isSoldOut ? (
-                    <div>
-                      <h2>Sold Out</h2>
-                    </div>
+                <div className={styles.mintAreaRight}>
+                  {claimedSupply && unclaimedSupply ? (
+                    <p>
+                      <b>{numberClaimed}</b>
+                      {" / "}
+                      {numberTotal}
+                    </p>
                   ) : (
-                    <Web3Button
-                      contractAddress={nftDrop?.getAddress() || ""}
-                      action={(cntr) => cntr.erc721.claim(quantity)}
-                      isDisabled={!canClaim || buttonLoading}
-                      onError={(err) => {
-                        console.error(err);
-                        alert("Error claiming NFTs");
-                      } }
-                      onSuccess={() => {
-                        setQuantity(1);
-                        alert("Successfully claimed NFTs");
-                      } }
-                    >
-                      {buttonLoading ? "Loading..." : buttonText}
-                    </Web3Button>
+                    <p>Loading...</p>
                   )}
                 </div>
-              </>
-            )}
-         
+              </div>
+
+              {claimConditions.data?.length === 0 ||
+                claimConditions.data?.every(
+                  (cc) => cc.maxClaimableSupply === "0"
+                ) ? (
+                <div>
+                  <h2>
+                    This drop is not ready to be minted yet. (No claim condition
+                    set)
+                  </h2>
+                </div>
+              ) : !activeClaimCondition.data && claimConditions.data ? (
+                <div>
+                  <h2>Drop starts in:</h2>
+                  <Timer date={claimConditions.data[0].startTime} />
+                </div>
+              ) : (
+                <>
+                  <div className={styles.quantityContainer}>
+                    <button
+                      className={`${styles.quantityControlButton}`}
+                      onClick={() => setQuantity(quantity - 1)}
+                      disabled={quantity <= 1}
+                    >
+                      -
+                    </button>
+
+                    <h4>{quantity}</h4>
+
+                    <button
+                      className={`${styles.quantityControlButton}`}
+                      onClick={() => setQuantity(quantity + 1)}
+                      disabled={quantity >= maxClaimable}
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <div className={styles.mintContainer}>
+                    {isSoldOut ? (
+                      <div>
+                        <h2>Sold Out</h2>
+                      </div>
+                    ) : (
+                      <Web3Button
+                        contractAddress={nftDrop?.getAddress() || ""}
+                        action={(cntr) => cntr.erc721.claim(quantity)}
+                        isDisabled={!canClaim || buttonLoading}
+                        onError={(err) => {
+                          console.error(err);
+                          alert("Error claiming NFTs");
+                        }}
+                        onSuccess={() => {
+                          setQuantity(1);
+                          alert("Successfully claimed NFTs");
+                        }}
+                      >
+                        {buttonLoading ? "Loading..." : buttonText}
+                      </Web3Button>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
           </>
         )}
-      </div></>
-    );
-  };
-  
+      </div>
+      {/* Powered by thirdweb */}{" "}
+      <Image
+        src="/logo.png"
+        alt="thirdweb Logo"
+        width={135}
+        height={22}
+        className={styles.buttonGapTop}
+        style={{
+          objectFit: "contain",
+        }}
+      />
+    </div>
+  );
+};
+
 export default Home;
