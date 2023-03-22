@@ -211,7 +211,7 @@ const Home: NextPage = () => {
   ]);
 
   return (
-    <><div className={styles.container} /><div className={styles.socialIcons}>
+    <><div className={styles.socialIcons} /><div className={styles.socialIcons}>
       <div style={{ paddingRight: 10 }}>
         <a href="https://opensea.io">
           <Image
