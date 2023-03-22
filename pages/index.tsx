@@ -246,12 +246,20 @@ const Home: NextPage = () => {
           <p>Loading...</p>
         ) : (
           <>
+            <div className={styles.infoSide}>
+              {/* Title of your NFT Collection */}
+              <h1>Boys Adventure</h1>
+              {/* Description of your NFT Collection */}
+              <p className={styles.description}>
+              This is Just Test Minting Dapp
+              </p>
+            </div>
 
             <div className={styles.imageSide}>
               {/* Image Preview of NFTs */}
               <MediaRenderer
                 className={styles.image}
-                src="/preview.jpg"
+                src="/preview.gif"
                 alt={`<Boys> preview image`}
               />
 
@@ -290,6 +298,7 @@ const Home: NextPage = () => {
                 </div>
               ) : (
                 <>
+                  <p>Quantity</p>
                   <div className={styles.quantityContainer}>
                     <button
                       className={`${styles.quantityControlButton}`}
@@ -338,6 +347,18 @@ const Home: NextPage = () => {
             </div>
           </>
         )}
+      </div>
+      {/* Powered by web3 */}{" "}
+      <Image
+        src="/logo.png"
+        alt="logo"
+        width={10}
+        height={10}
+        className={styles.buttonGapTop}
+        style={{
+          objectFit: "contain",
+        }}
+      />
     </div>
   );
 };
