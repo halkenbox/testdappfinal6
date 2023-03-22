@@ -350,8 +350,8 @@ const Home: NextPage = () => {
       </div>
       {/* Powered by web3 */}{" "}
       <Image
-        src="/logo.png"
-        alt="logo"
+        src="/logo.jpg"
+        alt=""
         width={10}
         height={10}
         className={styles.buttonGapTop}
